@@ -896,19 +896,19 @@ def RunAsRoot(args):
 #end define
 
 def Add2Systemd(**kwargs):
-    if platform == "linux":
-        Add2SystemdLinux(kwargs)
-    elif platform == "darwin":
-        Add2LaunchdDarwin(kwargs)
-    else:
-        print("this daemon controller is not supported")
+	if platform == "linux":
+		Add2SystemdLinux(kwargs)
+	elif platform == "darwin":
+		Add2LaunchdDarwin(kwargs)
+	else:
+		print("this daemon controller is not supported")
 
 def Add2LaunchdDarwin(**kwargs):
-    print("adding to launchd")
-    name = kwargs.get("name")
-    start = kwargs.get("start")
+	print("adding to launchd")
+	name = kwargs.get("name")
+	start = kwargs.get("start")
 
-    text = """
+	text = """
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
     "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -922,26 +922,26 @@ def Add2LaunchdDarwin(**kwargs):
     <true/>
 </dict>
 </plist>
-    """
-    file = open("/Library/LaunchDaemons/{name}.plist", 'wt')
-    file.write(text)
-    file.close()
+	"""
+	file = open("/Library/LaunchDaemons/{name}.plist", 'wt')
+	file.write(text)
+	file.close()
 
-    # Изменить права
-    args = ["chmod", "664", path]
-    subprocess.run(args)
+	# Изменить права
+	args = ["chmod", "664", path]
+	subprocess.run(args)
 
-    # Разрешить запуск
-    args = ["chmod", "+x", path]
-    subprocess.run(args)
+	# Разрешить запуск
+	args = ["chmod", "+x", path]
+	subprocess.run(args)
 
-    # Перезапустить launchd
-    args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist"]
-    subprocess.run(args)
+	# Перезапустить launchd
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist"]
+	subprocess.run(args)
 
-    # Включить автозапуск
-    args = ["launchctl", "enable", name]
-    subprocess.run(args)
+	# Включить автозапуск
+	args = ["launchctl", "enable", name]
+	subprocess.run(args)
 #end define
 
 def Add2SystemdLinux(**kwargs):
