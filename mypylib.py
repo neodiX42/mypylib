@@ -896,16 +896,17 @@ def RunAsRoot(args):
 #end define
 
 def Add2Systemd(**kwargs):
-    if platform == "linux"
+    if platform == "linux":
         Add2SystemdLinux(kwargs)
-    elif platform == "darwin"
+    elif platform == "darwin":
         Add2LaunchdDarwin(kwargs)
-    else
+    else:
         print("this daemon controller is not supported")
 
 def Add2LaunchdDarwin(**kwargs):
     print("adding to launchd")
     name = kwargs.get("name")
+    start = kwargs.get("start")
 
     text = """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -914,15 +915,15 @@ def Add2LaunchdDarwin(**kwargs):
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>validator</string>
+    <string>{name}</string>
     <key>Program</key>
-    <string>/usr/local/bin/ton/validator-engine/validator-engine --threads 2 --daemonize --global-config /usr/local/bin/ton/global.config.json --db /var/ton-work/db/ --logname /var/ton-work/log --state-ttl 604800</string>
+    <string>{start}</string>
     <key>RunAtLoad</key>
     <true/>
 </dict>
 </plist>
     """
-    file = open("/Library/LaunchDaemons/validator.plist", 'wt')
+    file = open("/Library/LaunchDaemons/{name}.plist", 'wt')
     file.write(text)
     file.close()
 
@@ -934,8 +935,8 @@ def Add2LaunchdDarwin(**kwargs):
     args = ["chmod", "+x", path]
     subprocess.run(args)
 
-    # Перезапустить systemd
-    args = ["launchctl", "load", "/Library/LaunchDaemons/validator.plist"]
+    # Перезапустить launchd
+    args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist"]
     subprocess.run(args)
 
     # Включить автозапуск
