@@ -896,15 +896,7 @@ def RunAsRoot(args):
 	return exitCode
 #end define
 
-def Add2Systemd(**kwargs):
-	if platform.system() == "Linux":
-		Add2SystemdLinux(kwargs)
-	elif platform.system() == "Darwin":
-		Add2LaunchdDarwin(kwargs)
-	else:
-		print("this daemon controller is not supported")
-
-def Add2LaunchdDarwin(**kwargs):
+def Add2Launchd(**kwargs):
 	name = kwargs.get("name")
 	print("adding {name} to launchd")
 	start = kwargs.get("start")
@@ -945,7 +937,7 @@ def Add2LaunchdDarwin(**kwargs):
 	subprocess.run(args)
 #end define
 
-def Add2SystemdLinux(**kwargs):
+def Add2Systemd(**kwargs):
 	name = kwargs.get("name")
 	print("adding {name} to systemd")
 	start = kwargs.get("start")
