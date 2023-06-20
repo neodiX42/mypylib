@@ -874,6 +874,54 @@ def RunAsRoot(args):
 #end define
 
 def Add2Systemd(**kwargs):
+    if platform == "linux"
+        Add2SystemdLinux(kwargs)
+    elif platform == "darwin"
+        Add2LaunchdDarwin(kwargs)
+    else
+        print("this daemon controller is not supported")
+
+def Add2LaunchdDarwin(**kwargs):
+    print("adding to launchd")
+    name = kwargs.get("name")
+
+    text = """
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>validator</string>
+    <key>Program</key>
+    <string>/usr/local/bin/ton/validator-engine/validator-engine --threads 2 --daemonize --global-config /usr/local/bin/ton/global.config.json --db /var/ton-work/db/ --logname /var/ton-work/log --state-ttl 604800</string>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
+    """
+    file = open("/Library/LaunchDaemons/validator.plist", 'wt')
+    file.write(text)
+    file.close()
+
+    # Изменить права
+    args = ["chmod", "664", path]
+    subprocess.run(args)
+
+    # Разрешить запуск
+    args = ["chmod", "+x", path]
+    subprocess.run(args)
+
+    # Перезапустить systemd
+    args = ["launchctl", "load", "/Library/LaunchDaemons/validator.plist"]
+    subprocess.run(args)
+
+    # Включить автозапуск
+    args = ["launchctl", "enable", name]
+    subprocess.run(args)
+#end define
+
+def Add2SystemdLinux(**kwargs):
 	name = kwargs.get("name")
 	start = kwargs.get("start")
 	post = kwargs.get("post", "/bin/echo service down")
