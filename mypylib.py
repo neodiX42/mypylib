@@ -788,6 +788,7 @@ def GetLoadAvg():
 	return output
 #end define
 
+#TODO mac ip
 def GetInternetInterfaceName():
 	if platform.system() == "OpenBSD":
 		cmd="ifconfig egress"
@@ -896,16 +897,16 @@ def RunAsRoot(args):
 #end define
 
 def Add2Systemd(**kwargs):
-	if platform == "linux":
+	if platform.system() == "Linux":
 		Add2SystemdLinux(kwargs)
-	elif platform == "darwin":
+	elif platform.system() == "Darwin":
 		Add2LaunchdDarwin(kwargs)
 	else:
 		print("this daemon controller is not supported")
 
 def Add2LaunchdDarwin(**kwargs):
-	print("adding to launchd")
 	name = kwargs.get("name")
+	print("adding {name} to launchd")
 	start = kwargs.get("start")
 
 	text = """
@@ -946,6 +947,7 @@ def Add2LaunchdDarwin(**kwargs):
 
 def Add2SystemdLinux(**kwargs):
 	name = kwargs.get("name")
+	print("adding {name} to systemd")
 	start = kwargs.get("start")
 	post = kwargs.get("post", "/bin/echo service down")
 	user = kwargs.get("user", "root")
