@@ -898,10 +898,9 @@ def RunAsRoot(args):
 
 def Add2Launchd(**kwargs):
 	name = kwargs.get("name")
-	print("adding {name} to launchd")
 	start = kwargs.get("start")
 
-	text = """
+	text = f"""
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
     "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -916,7 +915,7 @@ def Add2Launchd(**kwargs):
 </dict>
 </plist>
 	"""
-	file = open("/Library/LaunchDaemons/{name}.plist", 'wt')
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
 
@@ -929,7 +928,7 @@ def Add2Launchd(**kwargs):
 	subprocess.run(args)
 
 	# Перезапустить launchd
-	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist"]
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
 
 	# Включить автозапуск
@@ -939,7 +938,6 @@ def Add2Launchd(**kwargs):
 
 def Add2Systemd(**kwargs):
 	name = kwargs.get("name")
-	print("adding {name} to systemd")
 	start = kwargs.get("start")
 	post = kwargs.get("post", "/bin/echo service down")
 	user = kwargs.get("user", "root")
