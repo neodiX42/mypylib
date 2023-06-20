@@ -919,14 +919,6 @@ def Add2Launchd(**kwargs):
 	file.write(text)
 	file.close()
 
-	# Изменить права
-	args = ["chmod", "664", path]
-	subprocess.run(args)
-
-	# Разрешить запуск
-	args = ["chmod", "+x", path]
-	subprocess.run(args)
-
 	# Перезапустить launchd
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
