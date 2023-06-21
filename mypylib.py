@@ -911,7 +911,12 @@ def Add2Launchd(**kwargs):
     <key>Program</key>
     <string>{start}</string>
     <key>RunAtLoad</key>
-    <true/>
+    <false/>
+	<key>KeepAlive</key>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
 </dict>
 </plist>
 	"""
@@ -919,13 +924,11 @@ def Add2Launchd(**kwargs):
 	file.write(text)
 	file.close()
 
-	# Перезапустить launchd
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
 
-	# Включить автозапуск
-	args = ["launchctl", "enable", name]
-	subprocess.run(args)
+# 	args = ["launchctl", "enable", "system/{name}".format(name=name)]
+# 	subprocess.run(args)
 #end define
 
 def Add2Systemd(**kwargs):
