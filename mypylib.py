@@ -927,8 +927,8 @@ def Add2Launchd(**kwargs):
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
 
-# 	args = ["launchctl", "enable", "system/{name}".format(name=name)]
-# 	subprocess.run(args)
+	args = ["launchctl", "enable", "system/{name}".format(name=name)]
+	subprocess.run(args)
 #end define
 
 def Add2Systemd(**kwargs):
