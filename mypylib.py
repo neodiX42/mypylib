@@ -937,14 +937,13 @@ def Add2LaunchdDhtServer(**kwargs):
 </dict>
 </plist>
 	"""
-	#file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
-	file = open("/Library/LaunchAgents/{name}.plist".format(name=name), 'wt')
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
 
 	#args = ["chown", chownOwner, path1, path2]
 
-	args = ["launchctl", "load", "/Library/LaunchAgents/{name}.plist".format(name=name)]
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 
 	subprocess.run(args)
 
@@ -993,8 +992,6 @@ def Add2LaunchdValidator(**kwargs):
     <string>/tmp/local.{name}.out</string>
     <key>Debug</key>
     <true/>
-    <key>UserName</key>
-    <string>validator</string>
     <key>RunAtLoad</key>
     <false/>
         <key>KeepAlive</key>
@@ -1005,14 +1002,13 @@ def Add2LaunchdValidator(**kwargs):
 </dict>
 </plist>
 	"""
-	#file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
-	file = open("/Library/LaunchAgents/{name}.plist".format(name=name), 'wt')
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
 
 	#args = ["chown", chownOwner, path1, path2]
 
-	args = ["launchctl", "load", "/Library/LaunchAgents/{name}.plist".format(name=name)]
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
 
 	#args = ["launchctl", "start", "system/{name}".format(name=name)]
@@ -1042,8 +1038,6 @@ def Add2LaunchdMyTonCore(**kwargs):
     <string>/tmp/local.{name}.out</string>
     <key>Debug</key>
     <true/>
-    <key>UserName</key>
-    <string>validator</string>
     <key>RunAtLoad</key>
     <false/>
         <key>KeepAlive</key>
@@ -1054,14 +1048,13 @@ def Add2LaunchdMyTonCore(**kwargs):
 </dict>
 </plist>
 	"""
-	#file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
-	file = open("/Library/LaunchAgents/{name}.plist".format(name=name), 'wt')
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
 
 	#args = ["chown", chownOwner, path1, path2]
 
-	args = ["launchctl", "load", "/Library/LaunchAgents/{name}.plist".format(name=name)]
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
 
 	#args = ["launchctl", "start", "system/{name}".format(name=name)]
