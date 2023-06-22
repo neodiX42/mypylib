@@ -925,23 +925,19 @@ def Add2LaunchdDhtServer(**kwargs):
     <string>/tmp/local.{name}.out</string>
     <key>Debug</key>
     <true/>
-    <key>UserName</key>
-    <string>validator</string>
     <key>RunAtLoad</key>
     <false/>
-        <key>KeepAlive</key>
-        <dict>
-           <key>SuccessfulExit</key>
-           <false/>
-        </dict>
+    <key>KeepAlive</key>
+    <dict>
+       <key>SuccessfulExit</key>
+       <false/>
+    </dict>
 </dict>
 </plist>
 	"""
 	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
-
-	#args = ["chown", chownOwner, path1, path2]
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 
@@ -994,19 +990,17 @@ def Add2LaunchdValidator(**kwargs):
     <true/>
     <key>RunAtLoad</key>
     <false/>
-        <key>KeepAlive</key>
-        <dict>
-           <key>SuccessfulExit</key>
-           <false/>
-        </dict>
+    <key>KeepAlive</key>
+    <dict>
+       <key>SuccessfulExit</key>
+       <false/>
+    </dict>
 </dict>
 </plist>
 	"""
 	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
-
-	#args = ["chown", chownOwner, path1, path2]
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
@@ -1040,19 +1034,17 @@ def Add2LaunchdMyTonCore(**kwargs):
     <true/>
     <key>RunAtLoad</key>
     <false/>
-        <key>KeepAlive</key>
-        <dict>
-           <key>SuccessfulExit</key>
-           <false/>
-        </dict>
+    <key>KeepAlive</key>
+    <dict>
+       <key>SuccessfulExit</key>
+       <false/>
+    </dict>
 </dict>
 </plist>
 	"""
 	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
 	file.write(text)
 	file.close()
-
-	#args = ["chown", chownOwner, path1, path2]
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
