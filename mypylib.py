@@ -899,6 +899,9 @@ def RunAsRoot(args):
 def Add2Launchd(**kwargs):
 	name = kwargs.get("name")
 	start = kwargs.get("start")
+	isPython = kwargs.get("python")
+
+	startWithPython = "<string>/usr/bin/python3</string>" if isPython else ""
 
 	text = f"""
 <?xml version="1.0" encoding="UTF-8"?>
@@ -908,15 +911,24 @@ def Add2Launchd(**kwargs):
 <dict>
     <key>Label</key>
     <string>{name}</string>
-    <key>Program</key>
-    <string>{start}</string>
+    <key>ProgramArguments</key>
+    <array>
+        {startWithPython}
+        <string>{start}</string>
+    </array>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
     <key>RunAtLoad</key>
     <false/>
-	<key>KeepAlive</key>
-	<dict>
-		<key>SuccessfulExit</key>
-		<false/>
-	</dict>
+        <key>KeepAlive</key>
+        <dict>
+           <key>SuccessfulExit</key>
+           <false/>
+        </dict>
 </dict>
 </plist>
 	"""
@@ -924,11 +936,13 @@ def Add2Launchd(**kwargs):
 	file.write(text)
 	file.close()
 
+	#args = ["chown", chownOwner, path1, path2]
+
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
 
-	args = ["launchctl", "enable", "system/{name}".format(name=name)]
-	subprocess.run(args)
+	#args = ["launchctl", "start", "system/{name}".format(name=name)]
+	#subprocess.run(args)
 #end define
 
 def Add2Systemd(**kwargs):
