@@ -913,7 +913,9 @@ def Add2LaunchdDhtServer(**kwargs):
     <key>ProgramArguments</key>
     <array>
         <string>{start}</string>
+        <string>-C</string>
         <string>{arg1}</string>
+        <string>-D</string>
         <string>{arg2}</string>
     </array>
     <key>StandardErrorPath</key>
@@ -954,7 +956,6 @@ def Add2LaunchdValidator(**kwargs):
 	arg4 = kwargs.get("arg4")
 	arg5 = kwargs.get("arg5")
 	arg6 = kwargs.get("arg6")
-	arg7 = kwargs.get("arg7")
 
 	text = f"""
 <?xml version="1.0" encoding="UTF-8"?>
@@ -967,13 +968,19 @@ def Add2LaunchdValidator(**kwargs):
     <key>ProgramArguments</key>
     <array>
         <string>{start}</string>
+        <string>--threads</string>
         <string>{arg1}</string>
+        <string>--daemonize</string>
+        <string>--global-config</string>
         <string>{arg2}</string>
+        <string>--db</string>
         <string>{arg3}</string>
+        <string>--logname</string>
         <string>{arg4}</string>
+        <string>--state-ttl</string>
         <string>{arg5}</string>
+        <string>--verbosity</string>
         <string>{arg6}</string>
-        <string>{arg7}</string>
     </array>
     <key>StandardErrorPath</key>
     <string>/tmp/local.{name}.err</string>
