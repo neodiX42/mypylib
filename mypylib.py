@@ -896,12 +896,11 @@ def RunAsRoot(args):
 	return exitCode
 #end define
 
-def Add2Launchd(**kwargs):
+def Add2LaunchdDhtServer(**kwargs):
 	name = kwargs.get("name")
 	start = kwargs.get("start")
-	isPython = kwargs.get("python")
-
-	startWithPython = "<string>/usr/bin/python3</string>" if isPython else ""
+	arg1 = kwargs.get("arg1")
+	arg2 = kwargs.get("arg2")
 
 	text = f"""
 <?xml version="1.0" encoding="UTF-8"?>
@@ -913,7 +912,113 @@ def Add2Launchd(**kwargs):
     <string>{name}</string>
     <key>ProgramArguments</key>
     <array>
-        {startWithPython}
+        <string>{start}</string>
+        <string>{arg1}</string>
+        <string>{arg2}</string>
+    </array>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <false/>
+        <key>KeepAlive</key>
+        <dict>
+           <key>SuccessfulExit</key>
+           <false/>
+        </dict>
+</dict>
+</plist>
+	"""
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
+	file.write(text)
+	file.close()
+
+	#args = ["chown", chownOwner, path1, path2]
+
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
+	subprocess.run(args)
+
+	#args = ["launchctl", "start", "system/{name}".format(name=name)]
+	#subprocess.run(args)
+#end define
+
+def Add2LaunchdValidator(**kwargs):
+	name = kwargs.get("name")
+	start = kwargs.get("start")
+	arg1 = kwargs.get("arg1")
+	arg2 = kwargs.get("arg2")
+	arg3 = kwargs.get("arg3")
+	arg4 = kwargs.get("arg4")
+	arg5 = kwargs.get("arg5")
+	arg6 = kwargs.get("arg6")
+	arg7 = kwargs.get("arg7")
+
+	text = f"""
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{name}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>{start}</string>
+        <string>{arg1}</string>
+        <string>{arg2}</string>
+        <string>{arg3}</string>
+        <string>{arg4}</string>
+        <string>{arg5}</string>
+        <string>{arg6}</string>
+        <string>{arg7}</string>
+    </array>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <false/>
+        <key>KeepAlive</key>
+        <dict>
+           <key>SuccessfulExit</key>
+           <false/>
+        </dict>
+</dict>
+</plist>
+	"""
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
+	file.write(text)
+	file.close()
+
+	#args = ["chown", chownOwner, path1, path2]
+
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
+	subprocess.run(args)
+
+	#args = ["launchctl", "start", "system/{name}".format(name=name)]
+	#subprocess.run(args)
+#end define
+
+def Add2LaunchdMyTonCore(**kwargs):
+	name = kwargs.get("name")
+	start = kwargs.get("start")
+
+	text = f"""
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{name}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
         <string>{start}</string>
     </array>
     <key>StandardErrorPath</key>
