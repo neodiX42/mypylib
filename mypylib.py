@@ -919,12 +919,6 @@ def Add2LaunchdDhtServer(**kwargs):
         <string>-D</string>
         <string>{arg2}</string>
     </array>
-    <key>StandardErrorPath</key>
-    <string>/tmp/local.{name}.err</string>
-    <key>StandardOutPath</key>
-    <string>/tmp/local.{name}.out</string>
-    <key>Debug</key>
-    <true/>
     <key>RunAtLoad</key>
     <false/>
     <key>KeepAlive</key>
@@ -982,12 +976,6 @@ def Add2LaunchdValidator(**kwargs):
         <string>--verbosity</string>
         <string>{arg6}</string>
     </array>
-    <key>StandardErrorPath</key>
-    <string>/tmp/local.{name}.err</string>
-    <key>StandardOutPath</key>
-    <string>/tmp/local.{name}.out</string>
-    <key>Debug</key>
-    <true/>
     <key>RunAtLoad</key>
     <false/>
     <key>KeepAlive</key>
