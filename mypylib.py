@@ -1014,12 +1014,6 @@ def Add2LaunchdMyTonCore(**kwargs):
         <string>/usr/bin/python3</string>
         <string>{start}</string>
     </array>
-    <key>StandardErrorPath</key>
-    <string>/tmp/local.{name}.err</string>
-    <key>StandardOutPath</key>
-    <string>/tmp/local.{name}.out</string>
-    <key>Debug</key>
-    <true/>
     <key>RunAtLoad</key>
     <false/>
     <key>KeepAlive</key>
