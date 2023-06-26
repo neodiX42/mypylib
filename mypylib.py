@@ -979,10 +979,7 @@ def Add2LaunchdValidator(**kwargs):
     <key>RunAtLoad</key>
     <false/>
     <key>KeepAlive</key>
-    <dict>
-       <key>SuccessfulExit</key>
-       <false/>
-    </dict>
+    <false/>
 </dict>
 </plist>
 	"""
