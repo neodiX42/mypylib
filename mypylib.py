@@ -980,6 +980,12 @@ def Add2LaunchdValidator(**kwargs):
     <false/>
     <key>KeepAlive</key>
     <false/>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
 </dict>
 </plist>
 	"""
