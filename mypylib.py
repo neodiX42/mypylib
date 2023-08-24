@@ -885,6 +885,11 @@ def get_internet_interface_name():
 		lines = text.split('\n')
 		items = lines[0].split(' ')
 		interface_name = items[0][:-1]
+	if platform.system() == "Darwin":
+		cmd = "ifconfig | grep \"UP\|RUNNIG\" | awk '{print $1}' | grep ':' | tr -d ':' | grep -v lo | grep en"
+		text = subprocess.getoutput(cmd)
+		lines = text.split('\n')
+		interface_name = lines[0]
 	else:
 		cmd = "ip --json route"
 		text = subprocess.getoutput(cmd)
