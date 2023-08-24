@@ -1019,6 +1019,12 @@ def Add2LaunchdDhtServer(**kwargs):
        <key>SuccessfulExit</key>
        <false/>
     </dict>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
 </dict>
 </plist>
 	"""
