@@ -1128,6 +1128,12 @@ def Add2LaunchdMyTonCore(**kwargs):
        <key>SuccessfulExit</key>
        <false/>
     </dict>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
 </dict>
 </plist>
 	"""
@@ -1234,7 +1240,7 @@ def get_service_status(name):
 	psys = platform.system()
 	status = False
 	if psys == 'Darwin':
-		result = os.system(f"launchctl print system/{name} | grep 'state = running'")
+		result = os.system(f"launchctl print system/{name} | grep 'state = running' > /dev/null")
 	elif psys == "OpenBSD":
 		result = os.system(f"rcctl check {name}")
 	else:
