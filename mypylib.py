@@ -1236,12 +1236,12 @@ def get_service_status(name):
 	if psys == 'Darwin':
 		result = os.system(f"launchctl print system/{name} | grep 'state = running'")
 	elif psys == "OpenBSD":
-        result = os.system(f"rcctl check {name}")
-    else:
-        result = os.system(f"systemctl is-active --quiet {name}")
+		result = os.system(f"rcctl check {name}")
+	else:
+		result = os.system(f"systemctl is-active --quiet {name}")
 
-    if result == 0:
-        status = True
+	if result == 0:
+		status = True
 
 	return status
 #end define
