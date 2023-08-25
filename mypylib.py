@@ -331,11 +331,11 @@ class MyPyClass:
 			program_files_dir = "/usr/local/bin/"
 		else:
 			# https://habr.com/ru/post/440620/
-			user_home_dir = dir(os.getenv("HOME"))
 			if os.getenv("XDG_DATA_HOME"):
+				user_home_dir = dir(os.getenv("HOME"))
 				program_files_dir = dir(os.getenv("XDG_DATA_HOME", user_home_dir + ".local/share/"))
 			else:
-				if user_home_dir:
+				if os.getenv("HOME"):
 					program_files_dir = (os.getenv("HOME") + "/.local/share/")
 				else:
 					program_files_dir = ("/Users/administrator/.local/share/") # todo
