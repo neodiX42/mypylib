@@ -338,7 +338,7 @@ class MyPyClass:
 				if os.getenv("HOME"):
 					program_files_dir = (os.getenv("HOME") + "/.local/share/")
 				else:
-					program_files_dir = ("/Users/administrator/.local/share/") # todo
+					program_files_dir = ("/Users/administrator/.local/share/") #todo
 		my_name = self.get_my_name()
 		my_work_dir = dir(program_files_dir + my_name)
 		return my_work_dir
