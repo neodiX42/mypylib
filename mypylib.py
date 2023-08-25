@@ -1231,24 +1231,24 @@ def int2ip(dec):
 #end define
 
 def get_service_status(name):
+	psys = platform.system()
 	status = False
-	if platform.system() == 'Darwin':
-		status = True # todo
-	else:
-		psys = platform.system()
-		if psys == "OpenBSD":
-			result = os.system(f"rcctl check {name}")
-		else:
-			result = os.system(f"systemctl is-active --quiet {name}")
-		if result == 0:
-			status = True
+	if psys == 'Darwin':
+		result = os.system(f"launchctl print system/{name} | grep 'state = running'")
+	elif psys == "OpenBSD":
+        result = os.system(f"rcctl check {name}")
+    else:
+        result = os.system(f"systemctl is-active --quiet {name}")
+
+    if result == 0:
+        status = True
 
 	return status
 #end define
 
 def get_service_uptime(name):
 	if platform.system() == 'Darwin':
-		uptime = 10 # todo
+		uptime = 0
 	else:
 		property = "ExecMainStartTimestampMonotonic"
 		args = ["systemctl", "show", name, "--property=" + property]
@@ -1269,7 +1269,8 @@ def get_service_uptime(name):
 
 def get_service_pid(name):
 	if platform.system() == 'Darwin':
-		pid = 11 # todo
+		result = subprocess.getoutput(f"launchctl print system/{name} | grep 'pid = ' | sed 's/pid = ]*//g' | sed 's/\t//g'")
+		pid = int(result)
 	else:
 		property = "MainPID"
 		args = ["systemctl", "show", name, "--property=" + property]
