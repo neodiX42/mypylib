@@ -1234,7 +1234,7 @@ def get_service_status(name):
 	psys = platform.system()
 	status = False
 	if psys == 'Darwin':
-		result = os.system(f"launchctl print system/{name} | grep 'state = running'")
+		result = os.system(f"launchctl print system/{name} | grep 'state = running' > /dev/null")
 	elif psys == "OpenBSD":
 		result = os.system(f"rcctl check {name}")
 	else:
