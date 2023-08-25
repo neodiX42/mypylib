@@ -333,7 +333,7 @@ class MyPyClass:
 			# https://habr.com/ru/post/440620/
 			user_home_dir = dir(os.getenv("HOME"))
 			if os.getenv("XDG_DATA_HOME"):
-            	program_files_dir = dir(os.getenv("XDG_DATA_HOME", user_home_dir + ".local/share/"))
+				program_files_dir = dir(os.getenv("XDG_DATA_HOME", user_home_dir + ".local/share/"))
 			else:
 				program_files_dir = (os.getenv("HOME") + "/.local/share/")
 		my_name = self.get_my_name()
