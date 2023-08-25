@@ -1232,42 +1232,54 @@ def int2ip(dec):
 
 def get_service_status(name):
 	status = False
-	psys = platform.system()
-	if psys == "OpenBSD":
-		result = os.system(f"rcctl check {name}")
+	if platform.system() == 'Darwin':
+		status = True # todo
 	else:
-		result = os.system(f"systemctl is-active --quiet {name}")
-	if result == 0:
-		status = True
+		psys = platform.system()
+		if psys == "OpenBSD":
+			result = os.system(f"rcctl check {name}")
+		else:
+			result = os.system(f"systemctl is-active --quiet {name}")
+		if result == 0:
+			status = True
+
 	return status
 #end define
 
 def get_service_uptime(name):
-	property = "ExecMainStartTimestampMonotonic"
-	args = ["systemctl", "show", name, "--property=" + property]
-	process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3)
-	output = process.stdout.decode("utf-8")
-	err = process.stderr.decode("utf-8")
-	if len(err) > 0:
-		return
-	start_timestamp_monotonic = parse(output, f"{property}=", '\n') or 0
-	start_timestamp_monotonic = int(start_timestamp_monotonic) / 10 ** 6
-	boot_timestamp = psutil.boot_time()
-	time_now = time.time()
-	start_timestamp = boot_timestamp + start_timestamp_monotonic
-	uptime = int(time_now - start_timestamp)
+	if platform.system() == 'Darwin':
+		uptime = 10 # todo
+	else:
+		property = "ExecMainStartTimestampMonotonic"
+		args = ["systemctl", "show", name, "--property=" + property]
+		process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3)
+		output = process.stdout.decode("utf-8")
+		err = process.stderr.decode("utf-8")
+		if len(err) > 0:
+			return
+		start_timestamp_monotonic = parse(output, f"{property}=", '\n') or 0
+		start_timestamp_monotonic = int(start_timestamp_monotonic) / 10 ** 6
+		boot_timestamp = psutil.boot_time()
+		time_now = time.time()
+		start_timestamp = boot_timestamp + start_timestamp_monotonic
+		uptime = int(time_now - start_timestamp)
+
 	return uptime
 #end define
 
 def get_service_pid(name):
-	property = "MainPID"
-	args = ["systemctl", "show", name, "--property=" + property]
-	process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3)
-	output = process.stdout.decode("utf-8")
-	err = process.stderr.decode("utf-8")
-	if len(err) > 0:
-		return
-	pid = int(parse(output, f"{property}=", '\n'))
+	if platform.system() == 'Darwin':
+		pid = 11 # todo
+	else:
+		property = "MainPID"
+		args = ["systemctl", "show", name, "--property=" + property]
+		process = subprocess.run(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=3)
+		output = process.stdout.decode("utf-8")
+		err = process.stderr.decode("utf-8")
+		if len(err) > 0:
+			return
+		pid = int(parse(output, f"{property}=", '\n'))
+
 	return pid
 #end define
 
