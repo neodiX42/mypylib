@@ -326,7 +326,7 @@ class MyPyClass:
 
 	def get_my_work_dir(self):
 		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
-		if self.check_root_permission() or (os.getenv("HOME") == "root"):
+		if self.check_root_permission() or (os.getenv("USER") == 'root'):
 			# https://ru.wikipedia.org/wiki/FHS
 			program_files_dir = "/usr/local/bin/"
 		else:
