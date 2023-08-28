@@ -1001,8 +1001,8 @@ def run_as_root(args):
 #end define
 
 def Add2LaunchdDhtServer(**kwargs):
-
 	name = kwargs.get("name")
+	user = kwargs.get("user", "root")
 	start = kwargs.get("start")
 	arg1 = kwargs.get("arg1")
 	arg2 = kwargs.get("arg2")
@@ -1055,6 +1055,7 @@ def Add2LaunchdDhtServer(**kwargs):
 
 def Add2LaunchdValidator(**kwargs):
 	name = kwargs.get("name")
+	user = kwargs.get("user", "root")
 	start = kwargs.get("start")
 	arg1 = kwargs.get("arg1")
 	arg2 = kwargs.get("arg2")
@@ -1117,6 +1118,7 @@ def Add2LaunchdValidator(**kwargs):
 def Add2LaunchdMyTonCore(**kwargs):
 	name = kwargs.get("name")
 	start = kwargs.get("start")
+    user = kwargs.get("user", "root")
 
 	text = f"""
 <?xml version="1.0" encoding="UTF-8"?>
