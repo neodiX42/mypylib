@@ -1118,7 +1118,7 @@ def Add2LaunchdValidator(**kwargs):
 def Add2LaunchdMyTonCore(**kwargs):
 	name = kwargs.get("name")
 	start = kwargs.get("start")
-    user = kwargs.get("user", "root")
+	user = kwargs.get("user", "root")
 
 	text = f"""
 <?xml version="1.0" encoding="UTF-8"?>
