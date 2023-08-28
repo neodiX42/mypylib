@@ -326,7 +326,7 @@ class MyPyClass:
 
 	def get_my_work_dir(self):
 		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
-		if self.check_root_permission():
+		if self.check_root_permission() or (os.getenv("HOME") == "root"):
 			# https://ru.wikipedia.org/wiki/FHS
 			program_files_dir = "/usr/local/bin/"
 		else:
@@ -338,7 +338,7 @@ class MyPyClass:
 				if os.getenv("HOME"):
 					program_files_dir = (os.getenv("HOME") + "/.local/share/")
 				else:
-					program_files_dir = ("/Users/administrator/.local/share/") #todo
+					program_files_dir = ("/Users/" + os.getenv("SUDO_USER") + "/.local/share/")
 		my_name = self.get_my_name()
 		my_work_dir = dir(program_files_dir + my_name)
 		return my_work_dir
