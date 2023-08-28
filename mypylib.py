@@ -1015,6 +1015,8 @@ def Add2LaunchdDhtServer(**kwargs):
 <dict>
     <key>Label</key>
     <string>{name}</string>
+    <key>UserName</key>
+    <string>{user}</string>
     <key>ProgramArguments</key>
     <array>
         <string>{start}</string>
@@ -1069,6 +1071,8 @@ def Add2LaunchdValidator(**kwargs):
 <dict>
     <key>Label</key>
     <string>{name}</string>
+    <key>UserName</key>
+    <string>{user}</string>
     <key>ProgramArguments</key>
     <array>
         <string>{start}</string>
@@ -1122,6 +1126,8 @@ def Add2LaunchdMyTonCore(**kwargs):
 <dict>
     <key>Label</key>
     <string>{name}</string>
+    <key>UserName</key>
+    <string>{user}</string>
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
