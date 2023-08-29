@@ -363,7 +363,7 @@ class MyPyClass:
 
 	def check_root_permission(self):
 		if platform.system() == "Darwin":
-		process = subprocess.run(["touch", "/usr/local/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+			process = subprocess.run(["touch", "/usr/local/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 		else:
 			process = subprocess.run(["touch", "/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 		if process.returncode == 0:
