@@ -340,6 +340,7 @@ class MyPyClass:
 				else:
 					program_files_dir = ("/Users/" + os.getenv("SUDO_USER") + "/.local/share/")
 		my_name = self.get_my_name()
+		print("program_files_dir: "+program_files_dir)
 		my_work_dir = dir(program_files_dir + my_name)
 		return my_work_dir
 	#end define
