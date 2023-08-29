@@ -330,10 +330,13 @@ class MyPyClass:
 			user_home_dir = dir(os.getenv("HOME"))
 			program_files_dir = dir(os.getenv("XDG_DATA_HOME", user_home_dir + ".local/share/"))
 		elif os.getenv("HOME"):
-			if platform.system() == "Darwin" or os.getenv("USER") != 'root':
-				program_files_dir = os.getenv("HOME") + "/.local/share/"
+			if os.getenv("USER") = 'root':
+				if platform.system() == "Darwin"
+					program_files_dir = "/var/root/.local/share/"
+				else:
+					program_files_dir = "/usr/local/bin/"
 			else:
-				program_files_dir = "/usr/local/bin/"
+				program_files_dir = os.getenv("HOME") + "/.local/share/"
 		else:
 			program_files_dir = "/usr/local/bin/"
 
