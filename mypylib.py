@@ -326,7 +326,7 @@ class MyPyClass:
 
 	def get_my_work_dir(self):
 		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
-		if self.check_root_permission() or (os.getenv("USER") == 'root'):
+		if self.check_root_permission():
 			# https://ru.wikipedia.org/wiki/FHS
 			program_files_dir = "/usr/local/bin/"
 		else:
@@ -362,7 +362,10 @@ class MyPyClass:
 	#end define
 
 	def check_root_permission(self):
-		process = subprocess.run(["touch", "/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+		if platform.system() == "Darwin":
+		process = subprocess.run(["touch", "/usr/local/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+		else:
+			process = subprocess.run(["touch", "/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 		if process.returncode == 0:
 			subprocess.run(["rm", "/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 			result = True
