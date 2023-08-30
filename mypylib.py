@@ -345,6 +345,7 @@ class MyPyClass:
 		print("HOME: " + os.getenv("HOME", "none"))
 		print("USER: " + os.getenv("USER", "none"))
 		print("SUDO_USER: " + os.getenv("SUDO_USER", "none"))
+		print("MODULE: " + my_name)
 		my_work_dir = dir(program_files_dir + my_name)
 		return my_work_dir
 	#end define
