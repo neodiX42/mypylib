@@ -140,7 +140,7 @@ class bcolors:
 
 
 class MyPyClass:
-	def __init__(self, file):
+	def __init__(self, file, my_home_dir):
 		self.working = True
 		self.file = file
 		self.db = Dict()
@@ -152,7 +152,7 @@ class MyPyClass:
 		self.buffer.thread_count = None
 		self.buffer.memory_using = None
 		self.buffer.free_space_memory = None
-
+        self.buffer.my_work_dir = dir(my_home_dir + self.get_my_name())
 		self.refresh()
 
 		# Catch the shutdown signal
@@ -163,7 +163,7 @@ class MyPyClass:
 	def refresh(self):
 		# Get program, log and database file name
 		my_name = self.get_my_name()
-		my_work_dir = self.get_my_work_dir()
+		my_work_dir = self.buffer.my_work_dir
 		self.buffer.my_name = my_name
 		self.buffer.my_dir = self.get_my_dir()
 		self.buffer.my_full_name = self.get_my_full_name()
@@ -1056,9 +1056,6 @@ def Add2LaunchdDhtServer(**kwargs):
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 
 	subprocess.run(args)
-
-	#args = ["launchctl", "start", "system/{name}".format(name=name)]
-	#subprocess.run(args)
 #end define
 
 def Add2LaunchdValidator(**kwargs):
@@ -1118,9 +1115,6 @@ def Add2LaunchdValidator(**kwargs):
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
-
-	#args = ["launchctl", "start", "system/{name}".format(name=name)]
-	#subprocess.run(args)
 #end define
 
 def Add2LaunchdMyTonCore(**kwargs):
@@ -1165,9 +1159,6 @@ def Add2LaunchdMyTonCore(**kwargs):
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
-
-	#args = ["launchctl", "start", "system/{name}".format(name=name)]
-	#subprocess.run(args)
 #end define
 
 def add2systemd(**kwargs):
