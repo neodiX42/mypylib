@@ -140,7 +140,7 @@ class bcolors:
 
 
 class MyPyClass:
-	def __init__(self, file, my_home_dir):
+	def __init__(self, file, my_home_dir=None):
 		self.working = True
 		self.file = file
 		self.db = Dict()
@@ -152,7 +152,15 @@ class MyPyClass:
 		self.buffer.thread_count = None
 		self.buffer.memory_using = None
 		self.buffer.free_space_memory = None
-        self.buffer.my_work_dir = dir(my_home_dir + self.get_my_name())
+		if my_home_dir:
+			print("defined my_home_dir")
+        	self.buffer.my_work_dir = dir(my_home_dir + self.get_my_name())
+        	self.db.config.workDirPath = self.buffer.my_work_dir
+		else:
+			print("undefined my_home_dir")
+			self.load_db()
+        	self.buffer.my_work_dir = self.db.config.workDirPath
+
 		self.refresh()
 
 		# Catch the shutdown signal
@@ -164,6 +172,7 @@ class MyPyClass:
 		# Get program, log and database file name
 		my_name = self.get_my_name()
 		my_work_dir = self.buffer.my_work_dir
+		print("refresh: my_work_dir "+my_work_dir)
 		self.buffer.my_name = my_name
 		self.buffer.my_dir = self.get_my_dir()
 		self.buffer.my_full_name = self.get_my_full_name()
@@ -174,7 +183,7 @@ class MyPyClass:
 		self.buffer.db_path = my_work_dir + my_name + ".db"
 		self.buffer.pid_file_path = my_work_dir + my_name + ".pid"
 
-		# Check all directorys
+		# Check all directories
 		os.makedirs(self.buffer.my_work_dir, exist_ok=True)
 		os.makedirs(self.buffer.my_temp_dir, exist_ok=True)
 
