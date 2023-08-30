@@ -326,7 +326,7 @@ class MyPyClass:
 
 	def get_my_work_dir(self):
 		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
-		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform == "darwin" else "/usr/bin/mtc-work-dir"
+		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform.system() == "Darwin" else "/usr/bin/mtc-work-dir"
 		program_files_dir = self.read_file(mConfigSharedPath)
 		print("program_files_dir " + program_files_dir)
 		my_work_dir = dir(program_files_dir + my_name)
