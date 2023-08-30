@@ -326,26 +326,9 @@ class MyPyClass:
 
 	def get_my_work_dir(self):
 		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
-		if os.getenv("XDG_DATA_HOME"):
-			user_home_dir = dir(os.getenv("HOME"))
-			program_files_dir = dir(os.getenv("XDG_DATA_HOME", user_home_dir + ".local/share/"))
-		elif os.getenv("HOME"):
-			if os.getenv("USER") == 'root' and not os.getenv("SUDO_USER"):
-				if platform.system() == "Darwin":
-					program_files_dir = "/var/root/.local/share/"
-				else:
-					program_files_dir = "/usr/local/bin/"
-			else:
-				program_files_dir = os.getenv("HOME") + "/.local/share/"
-		else:
-			program_files_dir = "/usr/local/bin/"
-
-		my_name = self.get_my_name()
-		print("program_files_dir: " + program_files_dir)
-		print("HOME: " + os.getenv("HOME", "none"))
-		print("USER: " + os.getenv("USER", "none"))
-		print("SUDO_USER: " + os.getenv("SUDO_USER", "none"))
-		print("MODULE: " + my_name)
+		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform == "darwin" else "/usr/bin/mtc-work-dir"
+		program_files_dir = self.read_file(mConfigSharedPath)
+		print("program_files_dir " + program_files_dir)
 		my_work_dir = dir(program_files_dir + my_name)
 		return my_work_dir
 	#end define
