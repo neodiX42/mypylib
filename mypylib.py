@@ -325,9 +325,12 @@ class MyPyClass:
 	#end define
 
 	def get_my_work_dir(self):
-		'''return "/usr/local/bin/test/" or "/home/user/.local/share/test/"'''
 		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform.system() == "Darwin" else "/usr/bin/mtc-work-dir"
 		program_files_dir = self.read_file(mConfigSharedPath).strip()
+		if not program_files_dir:
+			print("Configuration file " + mConfigSharedPath + " is missing or empty! Content of this file should point to MyTonCtrl working directory, usually to $HOME/.local/share.")
+			sys.exit(1)
+
 		my_work_dir = dir(program_files_dir + self.get_my_name())
 		return my_work_dir
 	#end define
@@ -347,19 +350,6 @@ class MyPyClass:
 		else:
 			lang = "en"
 		return lang
-	#end define
-
-	def check_root_permission(self):
-		if platform.system() == "Darwin":
-			process = subprocess.run(["touch", "/usr/local/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-		else:
-			process = subprocess.run(["touch", "/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-		if process.returncode == 0:
-			subprocess.run(["rm", "/checkpermission"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-			result = True
-		else:
-			result = False
-		return result
 	#end define
 
 	def add_log(self, input_text, mode=INFO):
