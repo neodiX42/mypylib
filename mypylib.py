@@ -338,8 +338,8 @@ class MyPyClass:
 			work_dir = home + "/.local/share/"
 			self.add_log("Migrating from /usr/local/bin/ to "+ work_dir)
 			os.system("echo \"" + work_dir + "\" > " + mConfigSharedPath)
-
-			shutil.copytree("/usr/local/bin/mytoncore", work_dir + "/mytoncore")
+			if os.path.isdir("/usr/local/bin/mytoncore"):
+				shutil.copytree("/usr/local/bin/mytoncore", work_dir + "/mytoncore")
 
 		program_files_dir = self.read_file(mConfigSharedPath).strip()
 
