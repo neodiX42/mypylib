@@ -175,7 +175,7 @@ class MyPyClass:
 		self.buffer.db_path = my_work_dir + my_name + ".db"
 		self.buffer.pid_file_path = my_work_dir + my_name + ".pid"
 
-		# Check all directorys
+		# Check all directories
 		os.makedirs(self.buffer.my_work_dir, exist_ok=True)
 		os.makedirs(self.buffer.my_temp_dir, exist_ok=True)
 
@@ -329,11 +329,11 @@ class MyPyClass:
 		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform.system() == "Darwin" else "/usr/bin/mtc-work-dir"
 		if not os.path.isfile(mConfigSharedPath):
 			# means an update of an old system
-			print("Migrating from /usr/local/bin/ to "+ work_dir)
 			user = os.environ.get("USER", "root")
 			group = subprocess.getoutput("id -gn "+user)
 			home = subprocess.getoutput("eval echo ~"+user)
 			work_dir = home + "/.local/share/"
+			print("Migrating from /usr/local/bin/ to "+ work_dir)
 			os.system("echo \"" + work_dir + "\" > " + mConfigSharedPath)
 			shutil.copytree("/usr/local/bin/mytoncore", work_dir + "/mytoncore")
 
