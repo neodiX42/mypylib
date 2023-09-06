@@ -16,6 +16,7 @@ import hashlib
 import platform
 import threading
 import subprocess
+import shutil
 import datetime as date_time_library
 from urllib.request import urlopen
 from urllib.error import URLError
@@ -326,6 +327,16 @@ class MyPyClass:
 
 	def get_my_work_dir(self):
 		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform.system() == "Darwin" else "/usr/bin/mtc-work-dir"
+		if not os.path.isfile(mConfigSharedPath):
+			# means an update of an old system
+			print("Migrating from /usr/local/bin/ to "+ work_dir)
+			user = os.environ.get("USER", "root")
+			group = subprocess.getoutput("id -gn "+user)
+			home = subprocess.getoutput("eval echo ~"+user)
+			work_dir = home + "/.local/share/"
+			os.system("echo \"" + work_dir + "\" > " + mConfigSharedPath)
+			shutil.copytree("/usr/local/bin/mytoncore", work_dir + "/mytoncore")
+
 		program_files_dir = self.read_file(mConfigSharedPath).strip()
 		if not program_files_dir:
 			print("Configuration file " + mConfigSharedPath + " is missing or empty! Content of this file should point to MyTonCtrl working directory, usually to $HOME/.local/share.")
