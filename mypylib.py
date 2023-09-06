@@ -333,14 +333,11 @@ class MyPyClass:
 			group = subprocess.getoutput("id -gn "+user)
 			home = subprocess.getoutput("eval echo ~"+user)
 			work_dir = home + "/.local/share/"
-			print("Migrating from /usr/local/bin/ to "+ work_dir)
+			self.add_log("Migrating from /usr/local/bin/ to "+ work_dir)
 			os.system("echo \"" + work_dir + "\" > " + mConfigSharedPath)
 			shutil.copytree("/usr/local/bin/mytoncore", work_dir + "/mytoncore")
 
 		program_files_dir = self.read_file(mConfigSharedPath).strip()
-		if not program_files_dir:
-			print("Configuration file " + mConfigSharedPath + " is missing or empty! Content of this file should point to MyTonCtrl working directory, usually to $HOME/.local/share.")
-			sys.exit(1)
 
 		my_work_dir = dir(program_files_dir + self.get_my_name())
 		return my_work_dir
