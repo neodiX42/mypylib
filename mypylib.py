@@ -329,7 +329,7 @@ class MyPyClass:
 	#end define
 
 	def get_my_work_dir(self):
-		mConfigSharedPath = self.buffer.my_temp_dir + "/mtc-work-dir"
+		mConfigSharedPath = "/tmp/mytoncore/mtc-work-dir"
 		if not os.path.isfile(mConfigSharedPath):
 			# means an update of an old system
 			user = os.environ.get("USER", "root")
