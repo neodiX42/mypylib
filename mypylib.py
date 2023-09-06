@@ -164,20 +164,23 @@ class MyPyClass:
 	def refresh(self):
 		# Get program, log and database file name
 		my_name = self.get_my_name()
+
+		self.buffer.my_temp_dir = self.get_my_temp_dir()
+		os.makedirs(self.buffer.my_temp_dir, exist_ok=True)
+
 		my_work_dir = self.get_my_work_dir()
 		self.buffer.my_name = my_name
 		self.buffer.my_dir = self.get_my_dir()
 		self.buffer.my_full_name = self.get_my_full_name()
 		self.buffer.my_path = self.get_my_path()
 		self.buffer.my_work_dir = my_work_dir
-		self.buffer.my_temp_dir = self.get_my_temp_dir()
+
 		self.buffer.log_file_name = my_work_dir + my_name + ".log"
 		self.buffer.db_path = my_work_dir + my_name + ".db"
 		self.buffer.pid_file_path = my_work_dir + my_name + ".pid"
 
 		# Check all directories
 		os.makedirs(self.buffer.my_work_dir, exist_ok=True)
-		os.makedirs(self.buffer.my_temp_dir, exist_ok=True)
 
 		# Load local database
 		self.load_db()
@@ -326,7 +329,7 @@ class MyPyClass:
 	#end define
 
 	def get_my_work_dir(self):
-		mConfigSharedPath = "/usr/local/bin/mtc-work-dir" if platform.system() == "Darwin" else "/usr/bin/mtc-work-dir"
+		mConfigSharedPath = self.buffer.my_temp_dir + "/mtc-work-dir"
 		if not os.path.isfile(mConfigSharedPath):
 			# means an update of an old system
 			user = os.environ.get("USER", "root")
@@ -335,6 +338,7 @@ class MyPyClass:
 			work_dir = home + "/.local/share/"
 			self.add_log("Migrating from /usr/local/bin/ to "+ work_dir)
 			os.system("echo \"" + work_dir + "\" > " + mConfigSharedPath)
+
 			shutil.copytree("/usr/local/bin/mytoncore", work_dir + "/mytoncore")
 
 		program_files_dir = self.read_file(mConfigSharedPath).strip()
