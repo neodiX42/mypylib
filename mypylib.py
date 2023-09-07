@@ -1262,7 +1262,7 @@ def get_service_status(name):
 def get_service_uptime(name):
 	if platform.system() == 'Darwin':
 		cmd = "ps -p $(launchctl print system/" + name + " | grep pid |  awk '{print $3}') -oetime= | tr '-' ':' | awk -F: '{ total=0; m=1; } { for (i=0; i < NF; i++) {total += $(NF-i)*m; m *= i >= 2 ? 24 : 60 }} {print total}'"
-		uptime = os.system(cmd)
+		uptime = int(subprocess.getoutput(cmd))
 	else:
 		property = "ExecMainStartTimestampMonotonic"
 		args = ["systemctl", "show", name, "--property=" + property]
