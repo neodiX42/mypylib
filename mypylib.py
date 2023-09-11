@@ -987,9 +987,10 @@ def run_as_root(args):
 	elif psys == "OpenBSD":
 		args = ["doas"] + args
 	elif psys == 'Darwin':
-		user = os.environ.get("USER", "root")
-		print("Enter root password for user " + user)
-		args = ["su", "-", user, "-c"] + [" ".join(args)]
+		#user = os.environ.get("USER", "root")
+		#print("Enter sudo password for user " + user)
+		#args = ["su", "-", user, "-c"] + [" ".join(args)]
+		args = ["sudo", "-s"] + args
 	else:
 		print("Enter root password")
 		args = ["su", "-c"] + [" ".join(args)]
