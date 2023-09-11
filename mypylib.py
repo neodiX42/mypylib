@@ -997,6 +997,95 @@ def run_as_root(args):
 	return exit_code
 #end define
 
+def Add2LaunchdPytonv3(**kwargs):
+	name = kwargs.get("name")
+	user = kwargs.get("user", "root")
+	workdir = kwargs.get("workdir")
+	start = kwargs.get("start")
+
+	text = f"""
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{name}</string>
+    <key>UserName</key>
+    <string>{user}</string>
+    <key>WorkingDirectory</key>
+    <string>{workdir}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>{start}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>KeepAlive</key>
+    <dict>
+       <key>SuccessfulExit</key>
+       <false/>
+    </dict>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
+</dict>
+</plist>
+	"""
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
+	file.write(text)
+	file.close()
+
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
+	subprocess.run(args)
+#end define
+
+def Add2LaunchdJsonServer(**kwargs):
+	name = kwargs.get("name")
+	user = kwargs.get("user", "root")
+	start = kwargs.get("start")
+
+	text = f"""
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{name}</string>
+    <key>UserName</key>
+    <string>{user}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>{start}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>KeepAlive</key>
+    <dict>
+       <key>SuccessfulExit</key>
+       <false/>
+    </dict>
+    <key>StandardErrorPath</key>
+    <string>/tmp/local.{name}.err</string>
+    <key>StandardOutPath</key>
+    <string>/tmp/local.{name}.out</string>
+    <key>Debug</key>
+    <true/>
+</dict>
+</plist>
+	"""
+	file = open("/Library/LaunchDaemons/{name}.plist".format(name=name), 'wt')
+	file.write(text)
+	file.close()
+
+	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
+	subprocess.run(args)
+#end define
+
 def Add2LaunchdDhtServer(**kwargs):
 	name = kwargs.get("name")
 	user = kwargs.get("user", "root")
@@ -1043,11 +1132,7 @@ def Add2LaunchdDhtServer(**kwargs):
 	file.close()
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
-
 	subprocess.run(args)
-
-	#args = ["launchctl", "start", "system/{name}".format(name=name)]
-	#subprocess.run(args)
 #end define
 
 def Add2LaunchdValidator(**kwargs):
@@ -1107,9 +1192,6 @@ def Add2LaunchdValidator(**kwargs):
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
-
-	#args = ["launchctl", "start", "system/{name}".format(name=name)]
-	#subprocess.run(args)
 #end define
 
 def Add2LaunchdMyTonCore(**kwargs):
@@ -1154,9 +1236,6 @@ def Add2LaunchdMyTonCore(**kwargs):
 
 	args = ["launchctl", "load", "/Library/LaunchDaemons/{name}.plist".format(name=name)]
 	subprocess.run(args)
-
-	#args = ["launchctl", "start", "system/{name}".format(name=name)]
-	#subprocess.run(args)
 #end define
 
 def add2systemd(**kwargs):
